@@ -10,18 +10,25 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
+/**
+ * WebsiteScraper is constructed with a given website, and provides
+ * methods for easily logging into and scraping info from that website
+ * @author Russell
+ *
+ */
 public class WebsiteScraper {
 
 	private WebsiteData data;
 	private List<String> cookies;
 	
-	public WebsiteScraper() {
-		data = new WebsiteData();
+	public WebsiteScraper(String website) {
+		data = new WebsiteData(website);
 	}
 	
 	/**
@@ -39,6 +46,12 @@ public class WebsiteScraper {
 		connection.setRequestProperty("Connection", "keep-alive");
 		
 		String parameters = data.getUsernameRequestProperty() + "=" + username + "&" + data.getPasswordRequestProperty() + "=" + password;
+		
+		for (String s : data.getVariables()) {
+			parameters += "&" + s;
+		}
+		
+		System.out.println(parameters);
 		
 		connection.setDoOutput(true);
 		DataOutputStream s;
@@ -75,8 +88,8 @@ public class WebsiteScraper {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Attempts to get the number of points for the currently logged in account
+	 * @return the number of points associated with the current account, or -1 if an error occurred
 	 */
 	public int getPoints() {
 		HttpsURLConnection connection = getConnection(data.getPointsURL(), "GET");
@@ -99,13 +112,15 @@ public class WebsiteScraper {
 			Matcher m = p.matcher(response);
 			if (m.find()) {
 				return Integer.parseInt(m.group(1));
+			} else {
+				return -1;
 			}
 			
 		} catch (IOException e) {
 			System.err.println("I/O exception");
 			// might want to try a few more times...
+			return -1;
 		}
-		return 0;
 	}
 	
 	//TODO: finish getExpiration method
