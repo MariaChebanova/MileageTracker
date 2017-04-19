@@ -9,9 +9,9 @@ import java.util.List;
 
 public class DBConnection {
 	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	private static final String DB_URL = "students.washington.edu/rperry12";
+	private static final String DB_URL = "jdbc:mysql://localhost:7713/MileageTracker";
 	
-	private static final String USER = "username";
+	private static final String USER = "root";
 	private static final String PASS = "mysqlcapMilesHelper";
 	
 	private Connection conn;
@@ -22,8 +22,10 @@ public class DBConnection {
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+			System.exit(-1);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.exit(-1);
 		}
 	}
 	
