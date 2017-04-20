@@ -25,17 +25,29 @@ public class Server {
 	
 	public static void main(String[] args) {
 		try {
-			HttpServer s = HttpServer.create(new InetSocketAddress(8000), 0);
+			HttpServer s = HttpServer.create(new InetSocketAddress(7714), 0);
 			dbc = new DBConnection();
 			connections = new HashMap<InetSocketAddress, Integer>();
 			s.createContext("/login", new LoginHandler());
+			System.out.println("login page created");
 			s.createContext("/request", new RequestHandler());
+			System.out.println("request page created");
 			s.start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * Handles logging in and creating new accounts
+	 * can be accessed with the URI
+	 * 
+	 *  http:// ~url~ :7714/login?username=XXXX&password=XXXX
+	 * 
+	 *  http:// ~url~ :7714/login?username=XXXX&password=XXXX&fname=XXXX&mname=XXXX&lname=XXXX&email=XXXX
+	 * 
+	 * where XXXX is the value, and ~url~ is an as of yet undetermined url
+	 */
 	static class LoginHandler implements HttpHandler {
 		@Override
 		public void handle(HttpExchange t) throws IOException {
@@ -45,9 +57,14 @@ public class Server {
 			if (params.get("username") != null && params.get("password") != null) {
 				int passengerID = dbc.checkLogin(params.get("username"), params.get("password"));
 				if (passengerID < 0) {
-					response = "Invalid username or password";
+					if (params.get("fname") != null && params.get("mname") != null && params.get("lname") != null && params.get("email") != null) {
+						response = "OK, new login created";
+						dbc.createLogin(params.get("username"), params.get("password"), params.get("fname"), params.get("mname"), params.get("lname"), params.get("email"));
+					} else {
+						response = "";
+					}
 				} else {
-					response = "OK";
+					response = "OK, login successful";
 					connections.put(t.getRemoteAddress(), passengerID);
 				}
 			} else {
@@ -62,6 +79,20 @@ public class Server {
 		
 	}
 	
+	/**
+	 * Handles requests
+	 * can be accessed with the URI
+	 * 
+	 *  http:// ~url~ :7714/request?request=X&airline=XXXX
+	 * 
+	 * where XXXX is a valid airline, and X is a request type
+	 * 
+	 * Fails if the client has not yet logged in.
+	 * 
+	 * Always responds with some json, even in failure
+	 * @author rperry12
+	 *
+	 */
 	static class RequestHandler implements HttpHandler {
 		@Override
 		public void handle(HttpExchange t) {
@@ -106,6 +137,12 @@ public class Server {
 		}
 	}
 	
+	/**
+	 * Converts a URI to a map of parameters
+	 * Copied from stack overflow
+	 * @param query The URI containing some values
+	 * @return Map of parameters
+	 */
 	public static Map<String, String> queryToMap(String query){
 	    Map<String, String> result = new HashMap<String, String>();
 	    for (String param : query.split("&")) {

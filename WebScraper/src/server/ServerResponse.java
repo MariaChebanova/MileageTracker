@@ -1,5 +1,12 @@
 package server;
 
+/**
+ * Wrapper class for request responses
+ * This class holds all information, and can then be made into json
+ * to be sent to the client
+ * @author rperry12
+ *
+ */
 public class ServerResponse {
 
 	public boolean loggedIn;
@@ -22,10 +29,6 @@ public class ServerResponse {
 	public int expDay;
 	public int expMonth;
 	public int expYear;
-	
-	public ServerResponse() {
-		
-	}
 	
 	public String jsonify() {
 		

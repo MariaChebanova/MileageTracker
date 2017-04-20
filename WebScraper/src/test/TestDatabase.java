@@ -8,6 +8,7 @@ public class TestDatabase {
 		DBConnection dbc = new DBConnection();
 		
 		System.out.println(dbc.checkLogin("dzmuda", "Hello123"));
+		System.out.println(dbc.checkLogin("mc511", "Hello124"));
 		System.out.println(dbc.checkLogin("none", "none"));
 	}
 }
