@@ -12,6 +12,7 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 import database.DBConnection;
+import test.TestDBConnection;
 
 /**
  * Class that handles all server requests from the client
@@ -20,18 +21,19 @@ import database.DBConnection;
  */
 public class Server {
 
-	private static DBConnection dbc;
+	// change TestDBConnection to DBConnection for actual results
+	private static TestDBConnection dbc;
 	private static Map<InetSocketAddress, Integer> connections;
 	
 	public static void main(String[] args) {
 		try {
-			HttpServer s = HttpServer.create(new InetSocketAddress(7714), 0);
-			dbc = new DBConnection();
+			HttpServer s = HttpServer.create(new InetSocketAddress(7714), 100);
+			dbc = new TestDBConnection();
 			connections = new HashMap<InetSocketAddress, Integer>();
 			s.createContext("/login", new LoginHandler());
 			System.out.println("login page created");
-			s.createContext("/request", new RequestHandler());
-			System.out.println("request page created");
+			s.createContext("/query", new RequestHandler());
+			System.out.println("query page created");
 			s.start();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -51,7 +53,10 @@ public class Server {
 	static class LoginHandler implements HttpHandler {
 		@Override
 		public void handle(HttpExchange t) throws IOException {
+			System.out.println("handling login request");
+									
 			Map<String, String> params = queryToMap(t.getRequestURI().getQuery());
+			System.out.println(params);
 			String response;
 			
 			if (params.get("username") != null && params.get("password") != null) {
@@ -61,7 +66,7 @@ public class Server {
 						response = "OK, new login created";
 						dbc.createLogin(params.get("username"), params.get("password"), params.get("fname"), params.get("mname"), params.get("lname"), params.get("email"));
 					} else {
-						response = "";
+						response = "Incorrect username or password";
 					}
 				} else {
 					response = "OK, login successful";
@@ -83,7 +88,7 @@ public class Server {
 	 * Handles requests
 	 * can be accessed with the URI
 	 * 
-	 *  http:// ~url~ :7714/request?request=X&airline=XXXX
+	 *  http:// ~url~ :7714/query?request=X&airline=XXXX
 	 * 
 	 * where XXXX is a valid airline, and X is a request type
 	 * 
@@ -96,7 +101,10 @@ public class Server {
 	static class RequestHandler implements HttpHandler {
 		@Override
 		public void handle(HttpExchange t) {
+			System.out.println("handling query request");
+			
 			Map<String, String> params = queryToMap(t.getRequestURI().getQuery());
+			System.out.println(params);
 			ServerResponse sr = new ServerResponse();
 			
 			if (connections.get(t.getRemoteAddress()) == null) {
@@ -119,6 +127,7 @@ public class Server {
 						sr.requestType = 'l';
 						
 						
+						
 					// points request	
 					} else if (request == 'p') {
 						sr.requestType = 'p';
@@ -133,6 +142,16 @@ public class Server {
 						sr.error = "Invalid request";
 					}
 				}
+			}
+			String response = sr.jsonify();
+			
+			try {
+				t.sendResponseHeaders(200, response.length());
+				OutputStream os = (OutputStream) t.getResponseBody();
+				os.write(response.getBytes());
+				os.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 	}
