@@ -1,11 +1,14 @@
 package database;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+
+import scraper.Request;
 
 /**
  * This class connects to our database
@@ -79,16 +82,24 @@ public class DBConnection {
 		lName = sanitize(lName);
 		email = sanitize(email);
 		
-		if (checkLogin(username, password) >= 0) {
-			return false; // username already taken
-		}
+		Statement stmt;
+		String sql;
+		ResultSet rs;
 		
 		try {
-			Statement stmt = conn.createStatement();
 			
-			// I'd prefer to use some kind of proc here for adding user
+			// Check if the username is already taken
+			stmt = conn.createStatement();
+			sql = "SELECT PassengerID FROM Credentials WHERE Username=" + username;
+			rs = stmt.executeQuery(sql);
+			if (rs.isAfterLast()) {
+				return false; //username already taken
+			}
 			
-			String sql = "";
+			// Run the new user proc
+			stmt = conn.createStatement();
+			sql = "";
+			rs = stmt.executeQuery(sql);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -97,11 +108,135 @@ public class DBConnection {
 	}
 	
 	/**
-	 * Get the set of login urls associated with an airline
+	 * Get the login url associated with an airline
 	 * @param airline
-	 * @return a list of strings for the urls.  Will usually be length = 1
+	 * @return the url of the login page
 	 */
-	public List<String> getLoginURLs(String airline) {
+	public Request getLoginRequest(String airline) {
+		int airlineID = getAirlineID(airline);
+		int urlID = getURLID(airlineID, "AirlineLoginURLID");
+		Statement stmt;
+		String sql;
+		ResultSet rs;
+		
+		try {
+			stmt = conn.createStatement();
+			sql = "SELECT AirlineURL, AirlineURLMethod, AirlineURLRegex FROM Airline_URL WHERE AirlineURLID=" + urlID;
+			rs = stmt.executeQuery(sql);
+			if (rs.isAfterLast()) {
+				return null;
+			}
+			
+			Request r = new Request();
+			
+			r.url = rs.getString("AirlineURL");
+			r.method = rs.getString("AirlineURLMethod");
+			r.regex = null;
+			
+			return r;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Get the point page url associated with an airline
+	 * @param airline
+	 * @return the url of the point page
+	 */
+	public Request getPointsRequest(String airline) {
+		int airlineID = getAirlineID(airline);
+		int urlID = getURLID(airlineID, "AirlinePointsURLID");
+		Statement stmt;
+		String sql;
+		ResultSet rs;
+		
+		try {
+			stmt = conn.createStatement();
+			sql = "SELECT AirlineURL, AirlineURLMethod, AirlineURLRegex FROM Airline_URL WHERE AirlineURLID=" + urlID;
+			rs = stmt.executeQuery(sql);
+			if (rs.isAfterLast()) {
+				return null;
+			}
+			
+			Request r = new Request();
+			
+			r.url = rs.getString("AirlineURL");
+			r.method = rs.getString("AirlineURLMethod");
+			r.regex = rs.getString("AirlineURLRegex");
+			
+			return r;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Get the expiration page url associated with an airline
+	 * @param airling
+	 * @return the url of the expiration page
+	 */
+	public Request getExpirationRequest(String airline) {
+		int airlineID = getAirlineID(airline);
+		int urlID = getURLID(airlineID, "AirlineExpirationURLID");
+		Statement stmt;
+		String sql;
+		ResultSet rs;
+		
+		try {
+			stmt = conn.createStatement();
+			sql = "SELECT AirlineURL, AirlineURLMethod, AirlineURLRegex FROM Airline_URL WHERE AirlineURLID=" + urlID;
+			rs = stmt.executeQuery(sql);
+			if (rs.isAfterLast()) {
+				return null;
+			}
+			
+			Request r = new Request();
+			
+			r.url = rs.getString("AirlineURL");
+			r.method = rs.getString("AirlineURLMethod");
+			r.regex = rs.getString("AirlineURLRegex");
+			
+			return r;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Get the expiration format associated with an airline
+	 * @param airline
+	 * @return the expiration date format
+	 */
+	public String getExpirationFormat(String airline) {
+		int airlineID = getAirlineID(airline);
+		Statement stmt;
+		String sql;
+		ResultSet rs;
+		
+		try {
+			stmt = conn.createStatement();
+			sql = "SELECT AirlineExpirationFormat FROM Airline WHERE AirlineID=" + airlineID;
+			rs = stmt.executeQuery(sql);
+			if (rs.isAfterLast()) {
+				return null;
+			}
+			
+			return rs.getString("AirlineExpirationFormat");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return null;
 	}
 	
@@ -113,6 +248,113 @@ public class DBConnection {
 	 */
 	public String getCookies(String username, String airline) {
 		return null;
+	}
+	
+	/**
+	 * Get points saved from the database, without scraping the web
+	 * @param passengerID
+	 * @param airline
+	 * @return the number of points, or negative if an error occured
+	 */
+	public int getPoints(int passengerID, String airline) {
+		int airlineID = getAirlineID(airline);
+		Statement stmt;
+		String sql;
+		ResultSet rs;
+		
+		try {			
+			stmt = conn.createStatement();
+			sql = "SELECT MileageBalance FROM Passenger_Airline WHERE AirlineID=" + airlineID + " AND PassengerID=" + passengerID;
+			rs = stmt.executeQuery(sql);
+			if (rs.isAfterLast()) {
+				return -1;
+			}
+			
+			return rs.getInt("MileageBalance");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return -1;
+	}
+	
+	/**
+	 * Get the expiration date saved from the database, without scraping the web
+	 * @param passengerID
+	 * @param airline
+	 * @return the expiration date
+	 */
+	public Date getExpiration(int passengerID, String airline) {
+		int airlineID = getAirlineID(airline);
+		Statement stmt;
+		String sql;
+		ResultSet rs;
+		
+		try {			
+			stmt = conn.createStatement();
+			sql = "SELECT MileageBalanceExpirationDate FROM Passenger_Airline WHERE AirlineID=" + airlineID + " AND PassengerID=" + passengerID;
+			rs = stmt.executeQuery(sql);
+			if (rs.isAfterLast()) {
+				return null;
+			}
+						
+			return rs.getDate("MileageBalanceExpirationDate");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Get the airline ID from the name of the airline
+	 * @param airline
+	 * @return airlineID
+	 */
+	private int getAirlineID(String airline) {
+		airline = sanitize(airline);
+		
+		Statement stmt;
+		String sql;
+		ResultSet rs;
+		
+		try {
+			stmt = conn.createStatement();
+			sql = "SELECT AirlineID FROM Airline WHERE AirlineName=" + airline;
+			rs = stmt.executeQuery(sql);
+			if (rs.isAfterLast()) {
+				return -1;
+			}
+			
+			return rs.getInt("AirlineID");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	private int getURLID(int airlineID, String columnName) {
+		Statement stmt;
+		String sql;
+		ResultSet rs;
+		
+		try {
+			stmt = conn.createStatement();
+			sql = "SELECT " + columnName + " FROM Airline WHERE AirlineID=" + airlineID;
+			rs = stmt.executeQuery(sql);
+			if (rs.isAfterLast()) {
+				return -1;
+			}
+			
+			return rs.getInt("MileageBalance");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return -1;
 	}
 	
 	/**

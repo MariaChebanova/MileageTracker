@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URI;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +13,8 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 import database.DBConnection;
+import scraper.WebsiteData;
+import scraper.WebsiteScraper;
 import test.TestDBConnection;
 
 /**
@@ -22,13 +25,13 @@ import test.TestDBConnection;
 public class Server {
 
 	// change TestDBConnection to DBConnection for actual results
-	private static TestDBConnection dbc;
+	private static DBConnection dbc;
 	private static Map<InetSocketAddress, Integer> connections;
 	
 	public static void main(String[] args) {
 		try {
 			HttpServer s = HttpServer.create(new InetSocketAddress(7714), 100);
-			dbc = new TestDBConnection();
+			dbc = new DBConnection();
 			connections = new HashMap<InetSocketAddress, Integer>();
 			s.createContext("/login", new LoginHandler());
 			System.out.println("login page created");
@@ -54,7 +57,7 @@ public class Server {
 		@Override
 		public void handle(HttpExchange t) throws IOException {
 			System.out.println("handling login request");
-									
+			
 			Map<String, String> params = queryToMap(t.getRequestURI().getQuery());
 			System.out.println(params);
 			String response;
@@ -111,6 +114,7 @@ public class Server {
 				sr.loggedIn = false;
 				sr.error = "Not logged in";
 			} else {
+				int passengerID = connections.get(t.getRemoteAddress());
 				sr.loggedIn = true;
 				
 				if (params.get("request") == null) {
@@ -128,14 +132,22 @@ public class Server {
 						
 						
 						
-					// points request	
-					} else if (request == 'p') {
-						sr.requestType = 'p';
+					// get points request	
+					} else if (request == 'g') {
+						sr.requestType = 'g';
+						sr.points = dbc.getPoints(passengerID, airline);
+						Date expDate = dbc.getExpiration(passengerID, airline);
 						
+						sr.expDay = expDate.getDate();
+						sr.expMonth = expDate.getMonth();
+						sr.expYear = expDate.getYear();
 						
-					// expiration request	
-					} else if (request == 'e') {
-						sr.requestType = 'e';
+					// refresh points request
+					} else if (request == 'r') {
+						sr.requestType = 'r';
+						
+						WebsiteData data = new WebsiteData(airline, dbc);
+						WebsiteScraper ws = new WebsiteScraper(data);
 						
 					
 					} else {
@@ -164,6 +176,9 @@ public class Server {
 	 */
 	public static Map<String, String> queryToMap(String query){
 	    Map<String, String> result = new HashMap<String, String>();
+	    if (query == null) {
+	    	return result;
+	    }
 	    for (String param : query.split("&")) {
 	        String pair[] = param.split("=");
 	        if (pair.length>1) {

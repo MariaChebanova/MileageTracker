@@ -17,15 +17,14 @@ public class ServerResponse {
 	/*
 	 * What kind of request is this?
 	 *  'l' : login to airline website
-	 *  'p' : get the points from airline
-	 *  'e' : get the expiration from airline
+	 *  'r' : refresh the points/expiration
+	 *  'g' : get the points/expiration
 	 */
 	public char requestType;
 	
 	public String formData;
 	
 	public int points;
-	
 	public int expDay;
 	public int expMonth;
 	public int expYear;
@@ -33,7 +32,7 @@ public class ServerResponse {
 	public ServerResponse() {
 		requestType = 0;
 		formData = null;
-		error = null;
+		error = "";
 		expDay = -1;
 		expMonth = -1;
 		expYear = -1;
@@ -41,32 +40,35 @@ public class ServerResponse {
 	}
 	
 	public String jsonify() {
+		error = sanitize(error);
+		if (formData != null) {
+			formData = sanitize(formData);
+		}
+		
 		String s = "";
 		
 		s += "{";
 		
-		if (error != null) {
-			s += "{error:" + error + "}";
-		}
 		if (requestType != 0) {
-			s += "{requestType:" + requestType + "}";
+			s += "\"requestType\":" + requestType + ",";
 		}
 		if (formData != null) {
-			s += "{formData:" + formData + "}";
+			s += "\"formData\":" + formData + ",";
 		}
 		if (points >= 0) {
-			s += "{points:" + points + "}";
+			s += "\"points\":" + points + ",";
 		}
 		if (expDay >= 0) {
-			s += "{expDay:" + expDay + "}";
+			s += "\"expDay\":" + expDay + ",";
 		}
 		if (expMonth >= 0) {
-			s += "{expMonth:" + expMonth + "}";
+			s += "\"expMonth\":" + expMonth + ",";
 		}
 		if (expYear >= 0) {
-			s += "{expYear:" + expYear + "}";
+			s += "\"expYear\":" + expYear + ",";
 		}
-		
+		s += "\"error\":" + error + ",";
+
 		s += "}";
 		
 		return s;
@@ -76,10 +78,21 @@ public class ServerResponse {
 		
 		// needs to take care of ", \, /, backspace, formfeed, newline,
 		// carriage return, and horizontal tab
-		s.replaceAll("\"", "\\\"");
+		
+		// replace each backslash with two backslashes
 		s.replaceAll("\\", "\\\\");
+
+		// replace each quote with escaped quote
+		s.replaceAll("\"", "\\\"");
+		
+		// replace each forward slash with escaped forward slash
 		s.replaceAll("/", "\\/");
+		
+		// replace backspace, formfeed, newline, carriage return, and tab
+		s.replaceAll("\b", "\\b");
+		s.replaceAll("\f", "\\f");
 		s.replaceAll("\n", "\\n");
+		s.replaceAll("\r", "\\r");
 		s.replaceAll("\t", "\\t");
 		
 		// add quotes to front and back of string

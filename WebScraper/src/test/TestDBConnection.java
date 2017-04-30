@@ -12,7 +12,7 @@ import database.DBConnection;
  * @author Russell
  *
  */
-public class TestDBConnection {
+public class TestDBConnection extends DBConnection {
 
 	private Map<String, Integer> logins;
 	

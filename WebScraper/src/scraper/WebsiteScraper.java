@@ -27,9 +27,20 @@ public class WebsiteScraper {
 	private WebsiteData data;
 	private List<String> cookies;
 	
-	public WebsiteScraper(String website) {
-		data = new WebsiteData(website);
+	public WebsiteScraper(WebsiteData data) {
+		this.data = data;
 	}
+	
+	public String getForm() {
+		return null;
+		
+	}
+	
+	public boolean sendForm(String request) {
+		return false;
+		
+	}
+	
 	
 	/**
 	 * Attempts to login to the website with the given username and password
@@ -41,15 +52,17 @@ public class WebsiteScraper {
 		
 		CookieHandler.setDefault(new CookieManager());
 		
-		HttpsURLConnection connection = getConnection(data.getLoginURL(), "POST");
+		HttpsURLConnection connection = getConnection(data.login.url, data.login.method);
 		
 		connection.setRequestProperty("Connection", "keep-alive");
 		
+		/*
 		String parameters = data.getUsernameRequestProperty() + "=" + username + "&" + data.getPasswordRequestProperty() + "=" + password;
 		
 		for (String s : data.getVariables()) {
 			parameters += "&" + s;
 		}
+		*/
 		
 		System.out.println(parameters);
 		
@@ -92,7 +105,7 @@ public class WebsiteScraper {
 	 * @return the number of points associated with the current account, or -1 if an error occurred
 	 */
 	public int getPoints() {
-		HttpsURLConnection connection = getConnection(data.getPointsURL(), "GET");
+		HttpsURLConnection connection = getConnection(data.points.url, data.points.method);
 		connection.setInstanceFollowRedirects(true);
 		
 		try {
@@ -108,7 +121,7 @@ public class WebsiteScraper {
 			in.close();
 						
 			// try to match the regex
-			Pattern p = Pattern.compile(data.getPointsRegex());
+			Pattern p = Pattern.compile(data.points.regex);
 			Matcher m = p.matcher(response);
 			if (m.find()) {
 				return Integer.parseInt(m.group(1));
