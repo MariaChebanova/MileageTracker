@@ -1,0 +1,342 @@
+/* Dominik Zmuda, INFO343 D, Responsive Challenge */
+
+/* Imports Bootstrap functions and Font Awesome functions */
+@import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css');
+
+/* Imports Google Fonts: Raleway and Lato */
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,300');
+@import url('https://fonts.googleapis.com/css?family=Lato:400,300italic,300');
+
+/* main overall styles */
+body {
+	background-color: #E9EAEE;
+	font-family: Lato, 'Helvetica Neue', Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: 300;
+}
+
+/* headings */
+h1, h2, h3 {
+	font-family: Raleway, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+h2 {
+	color: lightblue;
+}
+
+#nav-links {
+	float: right;
+}
+
+#welcome {
+	padding: 4em;
+}
+
+.about-text {
+	font-size: 18px;
+
+	padding-top: 1em;
+	margin-left: 10em;
+	margin-right: 10em;
+}
+
+#airplane-icon {
+	 float: left;
+      position: relative;
+      left: 47.5%;
+}
+
+#airplane {
+	height: auto;
+	width: 1.5%;
+}
+
+/* heading area */
+#head, #cafe {
+	padding-top: 3em;
+}
+
+#menu, #story {
+	padding-top: 2em;
+}
+
+/* the actual headline text */
+#head-line {
+	font-style: italic;
+}
+
+#motto {
+	padding-right: 1em;
+}
+
+/* hidden SVG graphics */
+#motto, #headline-cup {
+	display: none;
+}
+
+/* SVG graphics */
+svg {
+	height: 1em;
+}
+
+#cup {
+	fill: white;
+}
+
+#cup:hover, .color-svg {
+	fill: #D87E28;
+}
+
+.color-svg {
+	height: 2em;
+}
+
+/* cafe info section */
+#cafe {
+	background-color: #DBDCE3;
+	padding-bottom: 1em;
+	text-align: center;
+}
+
+#map {
+	border-radius: 15px 5px 5px 5px;
+}
+
+.info, #map {
+	padding-top: 0.5em;
+	padding-left: 0;
+}
+
+#img-story {
+	border-radius: 5px;
+	float: right;
+	margin-left: 1em;
+	max-height: 300px;
+}
+
+#story {
+	background-color: #dbdce3;
+}
+
+/* footer styles */
+#footer {
+	background-color: lightgray;
+	border-top: darkgray solid 3px;
+	font-size: 12px;
+	padding-left: 3em;
+	padding-right: 3em;
+}
+
+.col-sm-3, .col-sm-9 {
+	margin-top: 1em;
+}
+
+/* list styles */
+ul {
+	list-style: none;
+}
+
+li {
+	margin: 7px 0;
+}
+
+.nav-list {
+	display: inline;
+}
+
+dd {
+	font-style: italic;
+	padding-left: 1em;
+}
+
+/* navigation */
+nav {
+	background-color: #181C22;
+	font-size: 16px;
+	font-variant: small-caps;
+
+	padding-left: 15px;
+	padding-top: 12px; /* nav bar looks much better with top padding */
+	padding-bottom: 12px;
+
+	position: fixed;
+	width: 100%;
+	z-index: 1;
+}
+
+/* link properties */
+nav a {
+	padding: 0.5em;
+}
+
+nav a, nav a:visited {
+	color: white;
+}
+
+nav a:hover {
+	color: lightblue;
+}
+
+nav a:active, nav a:hover, nav a:link, nav a:visited {
+	text-decoration: none;
+}
+
+#soon {
+	padding-top: 1em;
+	padding-left: 2em;
+}
+
+/* applies certain styles for browsers with screen larger than 768px */
+@media screen and (min-width: 768px) {
+	body {
+		font-size: 20px;
+	}
+
+	h2 {
+		padding-bottom: 1em;
+		text-align: center;
+	}
+
+	nav {
+		background-color: rgba(24, 28, 34, 0.8);
+	}
+
+	nav a {
+		padding-left: 1em;
+		padding-right: 1em;
+	}
+
+	/* header changes for larger screens */
+	#head {
+		background-image: url('images/bg.png');
+		background-repeat: no-repeat;
+		background-size: 100%;
+
+		color: white;
+		min-height: 350px;
+		padding-right: 2em; /* header text look better */
+		width: 100%;
+	}
+
+	#head, .col-sm-9 {
+		text-align: right;
+	}
+
+	.headline {
+		font-size: 1.25em;
+		text-align: center;
+		margin-top: 3em;
+		margin-bottom: 3em;
+	}
+
+	/* the actual headline text */
+	#head-line {
+		padding-top: 1em;
+	}
+
+	#headline-cup, #motto {
+		display: inline;
+	}
+
+	#headline-cup {
+		height: 1.5em;
+	}
+
+	#img-story {
+		max-height: 400px;
+	}
+}
+
+/* Applies certain styles for browsers with screen larger than 992px */
+@media screen and (min-width: 992px) {
+	h1 {
+		font-size: 4em;
+	}
+
+	#head {
+		background-image: url('images/bg.png');
+		min-height: 400px;
+	}
+}
+
+/* Applies certain styles for browsers with screen larger than 1200px */
+@media screen and (min-width: 1200px) {
+	#head {
+		background-image: url('images/bg.png');
+		min-height: 450px;
+	}
+}
+
+.form{
+    font-family: 'Open Sans Condensed', arial, sans;
+    width: 500px;
+    padding: 30px;
+    background: #FFFFFF;
+    margin: 50px auto;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
+
+}
+.form h2{
+    background: #4D4D4D;
+    text-transform: uppercase;
+    font-family: 'Open Sans Condensed', sans-serif;
+    color: #797979;
+    font-size: 18px;
+    font-weight: 100;
+    padding: 20px;
+    margin: -30px -30px 30px -30px;
+}
+.form input[type="text"],
+.form input[type="date"],
+.form input[type="datetime"],
+.form input[type="email"],
+.form input[type="number"],
+.form input[type="search"],
+.form input[type="time"],
+.form input[type="url"],
+.form input[type="password"],
+.form textarea,
+.form select 
+{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
+    display: block;
+    width: 100%;
+    padding: 7px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    background: transparent;
+    margin-bottom: 10px;
+    font: 16px Arial, Helvetica, sans-serif;
+    height: 45px;
+}
+.form textarea{
+    resize:none;
+    overflow: hidden;
+}
+.form input[type="button"], 
+.form input[type="submit"]{
+    -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+    box-shadow: inset 0px 1px 0px 0px #45D6D6;
+    background-color: #2CBBBB;
+    border: 1px solid #27A0A0;
+    display: inline-block;
+    cursor: pointer;
+    color: #FFFFFF;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 14px;
+    padding: 8px 18px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.form input[type="button"]:hover, 
+.form input[type="submit"]:hover {
+    background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
+    background-color:#34CACA;
+}
