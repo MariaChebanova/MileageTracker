@@ -2,8 +2,12 @@
 	/*
     	MileageTracker
     */
-	
-	$user = $_SESSION["PassengerUserName"];
+        
+	include("common.php");
+    sessionNotSet();
+    head();
+
+	$user = $_SESSION["name"];
 ?>
 
 <div id="main">
@@ -43,7 +47,6 @@
 
     <div>
         <a href="logout.php"><strong>Log Out</strong></a>
-        <em>(logged in since <?= dateCookie(isset($_COOKIE["lastLogin"])) ?>)</em>
     </div>
 </div>
 <?= footer() ?>
