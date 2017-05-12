@@ -13,6 +13,47 @@
 <div id="main">
     <h2><?= "$user" ?>'s Miles</h2>
 
+<?php
+
+    // connect to DB
+    $connect = dbConnect();
+
+    // query miles for this user
+    $sql = "SELECT A.AirlineName, A.AirlineCode, PA.MileageBalance, PA.MileageBalanceExpirationDate
+            FROM Passenger P
+                JOIN Passenger_Airline PA ON P.PassengerID = PA.PassengerID
+                JOIN Airline A ON PA.AirlineID = A.AirlineID
+                JOIN Credentials C ON P.PassengerID = C.PassengerID
+            WHERE C.Username = '".$user."'";
+
+    $result = $connect->query($sql);
+
+    echo "<div id=\"milestable\"><table>
+            <tr>
+                <th>AirlineName</th>
+                <th>AirlineCode</th>
+                <th>MileageBalance</th>
+                <th>MileageBalanceExpirationDate</th>
+            </tr>";
+
+    while($row = mysqli_fetch_assoc($result)) {
+       echo "<tr>";
+       echo "<td>".$row['AirlineName']."</td>";
+       echo "<td>".$row['AirlineCode']."</td>";
+       echo "<td>".$row['MileageBalance']."</td>";
+       echo "<td>".$row['MileageBalanceExpirationDate']."</td>";
+       echo "</tr>";
+}
+
+    echo "</table></div>";
+
+
+?>
+
+    <div>
+
+    </div>
+<!--
     <ul id="miles">
         <?php
             # if user's miles doesn't exist, make it
@@ -44,6 +85,7 @@
             </form>
         </li>
     </ul>
+    -->
 
     <div>
         <a href="logout.php"><strong>Log Out</strong></a>

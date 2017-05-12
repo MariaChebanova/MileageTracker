@@ -27,7 +27,7 @@
 		        </nav>
 		        <div id="head" class="container-fluid">
 		            <h1>MileageTracker</h1>
-		            <p id="motto">tracking your miles so you don't have to</p>
+		            <p id="motto">never let your miles expire</p>
 		        </div>
 
 <?php

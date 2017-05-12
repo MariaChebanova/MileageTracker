@@ -16,6 +16,11 @@ body {
 	font-weight: 300;
 }
 
+#milestable {
+	width: 655px;
+    margin: auto;
+}
+
 /* headings */
 h1, h2, h3 {
 	font-family: Raleway, 'Helvetica Neue', Helvetica, sans-serif;

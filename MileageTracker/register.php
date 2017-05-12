@@ -12,16 +12,17 @@
     <div id="register">
         <div class="form">
           <h2>Register</h2>
-          <form>
+          <form id="regform" action="new_user_reg.php" method="post">
             <input type="text" name="PassengerFName" placeholder="first name" />
             <input type="text" name="PassengerMName" placeholder="middle name (optional)" />
             <input type="text" name="PassengerLName" placeholder="last name" />
             <input type="email" name="PassengerEmail" placeholder="email" />
             <input type="text" name="PassengerUserName" placeholder="username" />
             <input type="password" name="PassengerPassword" placeholder="password" />
-            <input type="button" value="Register" />
+            <input type="submit" value="Register" />
           </form>
         </div>
     </div>
+
 
 <?= footer() ?>
