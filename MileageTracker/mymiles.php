@@ -48,6 +48,27 @@
     echo "</table></div>";
 
 
+    $connect = dbConnect();
+
+    // query miles for this user
+    $sql = "SELECT AirlineName, AirlineCode
+            FROM Airline";
+
+    $result = $connect->query($sql);
+
+    echo "<div>
+            <form action=\"airline_login.php\">
+                <select name=\"airline\">";
+
+    while($row = mysqli_fetch_assoc($result)) {
+        echo "<option value=\"".$row['AirlineCode']."\">".$row['AirlineName']."</option>";
+
+    }
+
+
+    echo "</select>
+            <input type=\"submit\"></form></div>";
+
 ?>
 
     <div>
