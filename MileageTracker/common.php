@@ -19,18 +19,54 @@
 		    <body>
 		        <nav>
 		            <a href="index.php"><object id="airplane" data="images/airplane.svg" type="image/svg+xml"></object></a>
+
+<?php
+	if (isset($_SESSION["name"])) {
+		echo "<span class=\"center\">".$_SESSION["name"]."'s miles</span>";
+	}
+?>
+
+
+		            
 		            <div id="nav-links">
-		                <a href="index.php#login">Login</a>
+<?php
+	if (!isset($_SESSION["name"])) {
+?>
+
 		                <a href="register.php">Register</a>
 		                <a href="about.php">About</a>
+<?php
+	} else {
+?>
+						<a href="mymiles.php">My Miles</a>
+						<a href="myprofile.php">My Profile</a>
+						<a href="logout.php">Logout</a>
+<?php
+	}
+?>
+
 		            </div>
 		        </nav>
-		        <div id="head" class="container-fluid">
+<?php
+	if (!isset($_SESSION["name"])) {
+?>
+
+		        <div id="head" class=" container-fluid">
 		            <h1>MileageTracker</h1>
 		            <p id="motto">never let your miles expire</p>
 		        </div>
+<?php
+
+	} else {
+?>
+
+	<div id="head-out" class="container-fluid">
+		            
+		        </div>
+
 
 <?php
+}
 	}
 
 	# displays the footer
@@ -43,7 +79,7 @@
 		                   &copy; 2017 MileageTracker
 		                </div>
 		                <div class="col-sm-9">
-		                    <p>Imprint</p>
+		                    <p><a href="imprint.html">Imprint</a></p>
 		                </div>
 		            </div>
 		        </div>
