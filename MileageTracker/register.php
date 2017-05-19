@@ -16,8 +16,11 @@
             <input type="text" name="PassengerFName" placeholder="first name" />
             <input type="text" name="PassengerLName" placeholder="last name" />
             <input type="email" name="PassengerEmail" placeholder="email" />
+            <input type="number" name="PassengerPhoneNumber" placeholder="phone" />
             <input type="text" name="PassengerUserName" placeholder="username" />
             <input type="password" name="PassengerPassword" placeholder="password" />
+            <input type="checkbox" name="AlertEmail" value="Email">Email Alerts<br>
+            <input type="checkbox" name="AlertPhone" value="Phone">Phone Alerts<br>
             <input type="submit" value="Register" />
           </form>
         </div>

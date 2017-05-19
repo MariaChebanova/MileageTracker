@@ -12,7 +12,7 @@
 	// connect to DB
 	$connect = dbConnect();
 	
-	$sql = "SELECT P.PassengerFName, P.PassengerLName, P.PassengerEmail, P.AlertDays, C.Username, C.Password
+	$sql = "SELECT P.PassengerFName, P.PassengerLName, P.PassengerEmail, P.PassengerPhoneNumber, P.AlertDays, P.AlertEmail, P.AlertPhone, C.Username, C.Password
 			FROM Passenger P
 			JOIN Credentials C ON P.PassengerID = C.PassengerID
 			WHERE C.Username = '".$user."'";
@@ -38,7 +38,7 @@
           <input type=\"text\" name=\"PassengerFName\" placeholder=\"".$row['PassengerFName']."\" />
           <input type=\"text\" name=\"PassengerLName\" placeholder=\"".$row['PassengerLName']."\" />
           <input type=\"email\" name=\"PassengerEmail\" placeholder=\"".$row['PassengerEmail']."\" />
-          
+          <input type=\"number\" name=\"PassengerPhoneNumber\" placeholder=\"".$row['PassengerPhoneNumber']."\" />
            <input type=\"password\" name=\"PassengerPassword\" placeholder=\"".$row['Password']."\" />
       		<input type=\"submit\" value=\"Update\" /></form></div></div>";
 
@@ -50,9 +50,24 @@
         <div class=\"form\">
           <h2>My Preferences</h2>
           <form id=\"regform\" action=\"update_preferences.php\" method=\"post\">
-<input type=\"text\" name=\"AlertDays\" placeholder=\"Start Alert This Many Days Before Expiration: ".$row['AlertDays']."\" />
+<input type=\"text\" name=\"AlertDays\" placeholder=\"Start Alert This Many Days Before Expiration: ".$row['AlertDays']."\" />";
 
-          <input type=\"submit\" value=\"Update\" /></form></div></div>";
+	$emailAlert = $row['AlertEmail'];
+	$phoneAlert = $row['AlertPhone'];
+
+	if ($emailAlert == 1) {
+		echo"<input type=\"checkbox\" name=\"AlertEmail\" value=\"Email\" checked=\"checked\">Email Alerts<br>";
+	} else {
+		echo"<input type=\"checkbox\" name=\"AlertEmail\" value=\"Email\">Email Alerts<br>";
+	}
+
+	if ($phoneAlert == 1) {
+		echo"<input type=\"checkbox\" name=\"AlertPhone\" value=\"Phone\" checked=\"checked\">Phone Alerts<br>";
+	} else {
+		echo"<input type=\"checkbox\" name=\"AlertPhone\" value=\"Phone\">Phone Alerts<br>";
+	}
+
+    echo "<input type=\"submit\" value=\"Update\" /></form></div></div>";
 
     echo "</div></div></div></div>";
 

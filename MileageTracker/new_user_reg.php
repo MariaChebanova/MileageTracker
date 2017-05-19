@@ -9,14 +9,18 @@
 	$fName = trim($_POST["PassengerFName"]);
 	$lName = trim($_POST["PassengerLName"]);
 	$email = trim($_POST["PassengerEmail"]);
+	$phone = trim($_POST["PassengerPhoneNumber"]);
 	$login = trim($_POST["PassengerUserName"]);
 	$password = trim($_POST["PassengerPassword"]);
+	$emailAlerts = trim($_POST["AlertEmail"]);
+	$phoneAlerts = trim($_POST["AlertPhone"]);
 	
 	// check for empty
 	if (empty($login)
 		|| empty($password)
 		|| empty($fName)
 		|| empty($lName)
+		|| empty($phone)
 		|| empty($email)) {
 		die("Invalid attempt to register.");
 	}
@@ -27,17 +31,30 @@
 	}
 	*/
 
+	$email_Alerts = 0;
+	$phone_Alerts = 0;
+
+	if (!empty($emailAlerts)) {
+		$email_Alerts = 1;
+	}
+
+	if (!empty($phoneAlerts)) {
+		$phone_Alerts = 1;
+	}
+
+
+
 	// connect to DB
 	$connect = dbConnect();
 
 	// query users
-	$passAdd = "INSERT INTO Passenger (PassengerFName, PassengerLName, PassengerEmail)
-			VALUES ('".$fName."', '".$lName."', '".$email."');";
+	$passAdd = "INSERT INTO Passenger (PassengerFName, PassengerLName, PassengerEmail, PassengerPhoneNumber, AlertEmail, AlertPhone)
+			VALUES ('".$fName."', '".$lName."', '".$email."', '".$phone."', ".$email_Alerts.", ".$phone_Alerts.")";
 
 	$passengerAdd = $connect->query($passAdd);
 
 	$credAdd = "INSERT INTO Credentials (PassengerID, Username, Password)
-				VALUES (LAST_INSERT_ID(), '".$login."', '".$password."');";
+				VALUES (LAST_INSERT_ID(), '".$login."', '".$password."')";
 
 	$credsAdd = $connect->query($credAdd);
 

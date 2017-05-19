@@ -12,6 +12,8 @@
 	$fName = trim($_POST["PassengerFName"]);
 	$lName = trim($_POST["PassengerLName"]);
 	$email = trim($_POST["PassengerEmail"]);
+	$phone = trim($_POST["PassengerPhoneNumber"]);
+	
 	//$login = trim($_POST["PassengerUserName"]);
 	$password = trim($_POST["PassengerPassword"]);
 	
@@ -37,6 +39,14 @@
 	if (!empty($email)) {
 		$sql = "UPDATE Passenger P JOIN Credentials C on P.PassengerID = C.PassengerID
 				SET P.PassengerEmail = '".$email."'
+				WHERE C.Username = '".$user."'";
+
+		$update = $connect->query($sql);
+	}
+
+	if (!empty($phone)) {
+		$sql = "UPDATE Passenger P JOIN Credentials C on P.PassengerID = C.PassengerID
+				SET P.PassengerPhoneNumber = '".$phone."'
 				WHERE C.Username = '".$user."'";
 
 		$update = $connect->query($sql);
