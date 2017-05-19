@@ -1,4 +1,4 @@
-package reminders;
+
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -6,15 +6,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties;
 
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
 import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 public class EmailReminder {
 
@@ -24,7 +18,7 @@ public class EmailReminder {
 	private static final String USER = "front";
 	private static final String PASS = "MileageTrackerFront";
 	
-	private static final String SQL_QUERY = "SELECT Passenger.PassengerFName, Passenger.PassengerMName, Passenger.PassengerLName, Passenger.PassengerEmail, Passenger.AlertDays, Passenger_Airline.MileageBalance, Passenger_Airline.MileageBalanceExpirationDate, NOW() AS CurrentDate FROM Passenger JOIN Passenger_Airline ON Passenger.PassengerID = Passenger_Airline.PassengerID WHERE Passenger_Airline.MileageBalanceExpirationDate > NOW();";
+	private static final String SQL_QUERY = "SELECT Passenger.PassengerFName, Passenger.PassengerEmail, Passenger.AlertDays, Passenger_Airline.MileageBalance, Passenger_Airline.MileageBalanceExpirationDate, Airline.AirlineName, NOW() AS CurrentDate FROM Passenger JOIN Passenger_Airline ON Passenger.PassengerID = Passenger_Airline.PassengerID JOIN Airline ON Airline.AirlineID = Passenger_Airline.AirlineID WHERE Passenger_Airline.MileageBalanceExpirationDate > NOW();";
 	
 	private static final String USERNAME = "mileage.tracker.capstone";
 	private static final String PASSWORD = "capstone2017";
@@ -57,15 +51,15 @@ public class EmailReminder {
 					// get the remaining info about this passenger
 					String emailTo = rs.getString("Passenger.PassengerEmail");
 					String fName = rs.getString("Passenger.PassengerFName");
-					String mName = rs.getString("Passenger.PassengerMName");
-					String lName = rs.getString("Passenger.PassengerLName");
+					String airline = rs.getString("Airline.AirlineName");
 					int balance = rs.getInt("Passenger_Airline.MileageBalance");
 					
 					// these points are close to expiring, lets send a reminder!
-					String title = "You have miles expiring soon!";
-					String message = "Dear " + fName + ",\nYou have a balance of " + balance + " miles expiring on " + expDate + ".\nAct now to make sure your miles don't expire!";
+					String title = "Your " + airline + " miles are expiring soon!";
+					String message = "Dear " + fName + ",\nYou have a balance of " + balance + " miles with the airline " + airline + ", expiring on " + expDate + ".\nAct now to make sure your miles don't expire!";
 					
 					GoogleMail.send(USERNAME, PASSWORD, emailTo, title, message);
+					System.out.println("email sent to " + emailTo);
 				}
 			}
 			

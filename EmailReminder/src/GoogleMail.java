@@ -1,4 +1,4 @@
-package reminders;
+
 
 import com.sun.mail.smtp.SMTPTransport;
 import java.security.Security;

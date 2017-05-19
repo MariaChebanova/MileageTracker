@@ -1,4 +1,4 @@
-package reminders;
+
 
 public class EmailReminderTest {
 	private static final String USERNAME = "mileage.tracker.capstone";
