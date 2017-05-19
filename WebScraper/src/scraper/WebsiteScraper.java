@@ -64,13 +64,13 @@ public class WebsiteScraper {
 		}
 		*/
 		
-		System.out.println(parameters);
+		//System.out.println(parameters);
 		
 		connection.setDoOutput(true);
 		DataOutputStream s;
 		try {
 			s = new DataOutputStream(connection.getOutputStream());
-			s.writeBytes(parameters);
+			//s.writeBytes(parameters);
 			s.flush();
 			s.close();
 			
