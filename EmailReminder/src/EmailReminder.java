@@ -58,7 +58,7 @@ public class EmailReminder {
 					String title = "Your " + airline + " miles are expiring soon!";
 					String message = "Dear " + fName + ",\nYou have a balance of " + balance + " miles with the airline " + airline + ", expiring on " + expDate + ".\nAct now to make sure your miles don't expire!";
 					
-					GoogleMail.send(USERNAME, PASSWORD, emailTo, title, message);
+					GoogleMail.send(USERNAME, PASSWORD, "MileageTracker", emailTo, title, message);
 					System.out.println("email sent to " + emailTo);
 				}
 			}

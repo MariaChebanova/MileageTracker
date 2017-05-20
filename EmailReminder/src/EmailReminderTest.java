@@ -6,7 +6,7 @@ public class EmailReminderTest {
 	
 	public static void main(String[] args) {
 		try {
-			GoogleMail.send(USERNAME, PASSWORD, "rperry12@uw.edu", "test email", "testing email notification");
+			GoogleMail.send(USERNAME, PASSWORD, "MileageTracker", "dzmuda@uw.edu", "test email", "testing email notification");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

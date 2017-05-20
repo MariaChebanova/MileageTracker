@@ -1,6 +1,8 @@
 
 
 import com.sun.mail.smtp.SMTPTransport;
+
+import java.io.UnsupportedEncodingException;
 import java.security.Security;
 import java.util.Date;
 import java.util.Properties;
@@ -13,7 +15,7 @@ import javax.mail.internet.MimeMessage;
 
 
 /**
- * Written by doraemon
+ * Written by doraemon, edited by Russell
  * http://stackoverflow.com/questions/3649014/send-email-using-java
  * @author doraemon
  */
@@ -32,8 +34,8 @@ public class GoogleMail {
      * @throws AddressException if the email address parse failed
      * @throws MessagingException if the connection is dead or not in the connected state or if the message is not a MimeMessage
      */
-    public static void send(final String username, final String password, String recipientEmail, String title, String message) throws AddressException, MessagingException {
-        GoogleMail.send(username, password, recipientEmail, "", title, message);
+    public static void send(final String username, final String password, final String name, String recipientEmail, String title, String message) throws AddressException, MessagingException {
+        GoogleMail.send(username, password, name, recipientEmail, "", title, message);
     }
 
     /**
@@ -48,7 +50,7 @@ public class GoogleMail {
      * @throws AddressException if the email address parse failed
      * @throws MessagingException if the connection is dead or not in the connected state or if the message is not a MimeMessage
      */
-    public static void send(final String username, final String password, String recipientEmail, String ccEmail, String title, String message) throws AddressException, MessagingException {
+    public static void send(final String username, final String password, final String name, String recipientEmail, String ccEmail, String title, String message) throws AddressException, MessagingException {
         Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 
@@ -77,7 +79,15 @@ public class GoogleMail {
         final MimeMessage msg = new MimeMessage(session);
 
         // -- Set the FROM and TO fields --
-        msg.setFrom(new InternetAddress(username + "@gmail.com"));
+        try {
+			msg.setFrom(new InternetAddress(username + "@gmail.com", name));
+		} catch (UnsupportedEncodingException e) {
+			msg.setFrom(new InternetAddress(username + "@gmail.com"));
+		}
+        
+        // -- Set the priority to high --
+        msg.setHeader("X-Priority", "1");
+        
         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail, false));
 
         if (ccEmail.length() > 0) {
