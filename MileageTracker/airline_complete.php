@@ -11,8 +11,6 @@
 	$actionurl = trim($_POST['MTForward']);
 	unset($_POST['MTForward']);
 	
-	print_r($_POST);
-	
 	$content = request($actionurl);
 	
 	print_r($content);
@@ -24,7 +22,6 @@ function request($url) {
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($ch, CURLOPT_POST, 1);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $_POST);
-	curl_setopt($ch, CURLOPT_COOKIESESSION, 1);
 	
 	curl_setopt($ch, CURLOPT_VERBOSE, 1);
 	curl_setopt($ch, CURLOPT_USERAGENT, 'User-Agent: curl/7.39.0');
