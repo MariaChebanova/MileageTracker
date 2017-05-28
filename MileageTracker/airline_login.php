@@ -25,7 +25,6 @@
 				
 		// get the url from the result
 		$resarray = $result->fetch_assoc();
-		
 		$url = $resarray['Url'];
 		$index = $resarray['Ind'];
 		
@@ -67,7 +66,7 @@
 			$form = preg_replace('/action=".*?"/', 'action="/rperry12/MileageTracker/airline_complete.php"', $form);
 			
 			// add the original action url to the form
-			$form = preg_replace('/>/', '><input hidden type="text" name="MTForward" value="' . $actionurl . '" >', $form, 1);
+			$form = preg_replace('/>/', '><input hidden type="text" name="MTAirlineCode" value="' . $airline . '" >', $form, 1);
 			
 
 		} else {

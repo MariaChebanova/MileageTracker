@@ -8,35 +8,54 @@
 	
 	// get the action url, and return the post array
 	// to what the airline would expect
-	$actionurl = trim($_POST['MTForward']);
-	unset($_POST['MTForward']);
+	$airline = trim($_POST['MTAirlineCode']);
+	unset($_POST['MTAirlineCode']);
 	
-	$content = request($actionurl);
+	
+	$connect = dbConnect();
+	$sql = "SELECT Airline_URL.AirlineURL AS Url FROM Airline_URL JOIN Airline ON Airline_URL.AirlineURLID = Airline.AirlineLoginURLID WHERE Airline.AirlineCode = '$airline'";
+	$result = $connect->query($sql);
+	if ($result->num_rows === 1) {
+				
+		// get the url from the result
+		$resarray = $result->fetch_assoc();
+		$loginurl = $resarray['Url'];
+				
+		$doc = new DOMDocument();
+		$doc->loadHTMLFile($loginurl);
+	}
+	
+	$sql = "SELECT Airline_URL.AirlineURL AS Url FROM Airline_URL JOIN Airline ON Airline_URL.AirlineURLID = Airline.AirlinePointsURLID WHERE Airline.AirlineCode = '$airline'";
+	$result = $connect->query($sql);
+	if ($result->num_rows === 1) {
+		
+		// get the points url
+		$resarray = $result->fetch_assoc();
+		$pointsurl = $resarray['Url'];
+		
+		print_r($pointsurl);
+	}
+	
+	$content = request($actionurl, $pointsurl);
+	
 	
 	print_r($content);
 	
 	
 	
-function request($url) {
-	$ch = curl_init($url);
+function request($actionurl, $pointsurl) {
+	$ch = curl_init($actionurl);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($ch, CURLOPT_POST, 1);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $_POST);
-	
-	curl_setopt($ch, CURLOPT_VERBOSE, 1);
-	curl_setopt($ch, CURLOPT_USERAGENT, 'User-Agent: curl/7.39.0');
-
+	curl_setopt($ch, CURLOPT_COOKIEJAR, 'cookie.txt');
 	$result = curl_exec($ch);
-	$statuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-	$statustext = curl_getinfo($ch);
+
+	curl_setopt($ch, CURLOPT_URL, $pointsurl);
+	$result = curl_exec($ch);
+	
 	curl_close($ch);
-	if($statuscode!=200){
-		echo "HTTP ERROR ".$statuscode."<br>";
-		echo "<pre>";
-		echo var_dump($statustext);
-		echo "</pre>";
-		return "false";
-	}
+	
 	return $result;
 }
 	
