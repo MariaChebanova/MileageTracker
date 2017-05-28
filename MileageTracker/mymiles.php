@@ -78,7 +78,7 @@ echo "</ul></div>";
 
     echo " <h2 class=\"clear\">AddAirline</h2>
     <div class=\"clear\">
-            <form action=\"airline_login.php\">
+            <form action=\"airline_login2.php\">
                 <select name=\"airline\">";
 
     while($row = mysqli_fetch_assoc($result)) {
