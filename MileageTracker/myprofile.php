@@ -84,7 +84,7 @@
           <input type=\"text\" name=\"PassengerLName\" placeholder=\"".$row['PassengerLName']."\" />
           <input type=\"email\" name=\"PassengerEmail\" placeholder=\"".$row['PassengerEmail']."\" />
           <input type=\"number\" name=\"PassengerPhoneNumber\" placeholder=\"".$row['PassengerPhoneNumber']."\" />
-           <input type=\"password\" name=\"PassengerPassword\" placeholder=\"".$row['Password']."\" />
+           <input type=\"password\" name=\"PassengerPassword\" placeholder=\"new password\"/>
       		<input type=\"submit\" value=\"Update\" /></form></div></div>";
 
     echo "</div>";
@@ -101,15 +101,15 @@
 	$phoneAlert = $row['AlertPhone'];
 
 	if ($emailAlert == 1) {
-		echo"<input type=\"checkbox\" name=\"AlertEmail\" value=\"Email\" checked=\"checked\">Email Alerts<br>";
+		echo"<label>Email Alerts</label><input type=\"checkbox\" name=\"AlertEmail\" value=\"Email\" checked=\"checked\"><br>";
 	} else {
-		echo"<input type=\"checkbox\" name=\"AlertEmail\" value=\"Email\">Email Alerts<br>";
+		echo"<label>Email Alerts</label><input type=\"checkbox\" name=\"AlertEmail\" value=\"Email\"><br>";
 	}
 
 	if ($phoneAlert == 1) {
-		echo"<input type=\"checkbox\" name=\"AlertPhone\" value=\"Phone\" checked=\"checked\">Phone Alerts<br>";
+		echo"<label>Phone Alerts</label><input type=\"checkbox\" name=\"AlertPhone\" value=\"Phone\" checked=\"checked\"><br>";
 	} else {
-		echo"<input type=\"checkbox\" name=\"AlertPhone\" value=\"Phone\">Phone Alerts<br>";
+		echo"<label>Phone Alerts</label><input type=\"checkbox\" name=\"AlertPhone\" value=\"Phone\"><br>";
 	}
 
     echo "<input type=\"submit\" value=\"Update\" /></form></div></div>";
