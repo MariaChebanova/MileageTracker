@@ -27,9 +27,54 @@
         <h2><?= "$user" ?>'s Profile</h2>
 
 <?php
+
+	echo "<div class=\"headline container-fluid\"><div class=\"row\"><div class=\"col-sm-6\">";
+	  echo "<div id=\"register\">
+        <div class=\"form\">
+          <h2>Contact Form </h2>
+          <form id=\"regform\"  method=\"post\">
+          <input type=\"text\" name=\"Your full Name\" placeholder='Your full Name' />
+          <input type=\"email\" name=\"Your Email\" placeholder='Your contact Email'/>
+		   <span></span><select name='selection'>
+			<option value='Job Inquiry'>Job Inquiry</option>
+			<option value='General Question'>General Question</option>
+			</select>
+			<input type =\"text\"  placeholder='Your Message to Us'> </input>
+      	   <input type=\"submit\" value=\"submit\" /></form></div></div>";
+
+    echo "</div>";
+
+	// echo "<form action='' method='post' class='STYLE-NAME'>
+    // 	<h3>Contact Form</h3>
+    // 	<label>
+    //     <span>Your Name :</span>
+	// 		<input id='name' type='text' name='name' placeholder='Your Full Name' />
+	// 	</label>
+		
+	// 	<label>
+	// 		<span>Your Email :</span>
+	// 		<input id='email' type='email' name='email' placeholder='Valid Email Address' />
+	// 	</label>
+		
+	// 	<label>
+	// 		<span>Message :</span>
+	// 		<textarea id='message' name='message' placeholder='Your Message to Us'></textarea>
+	// 	</label> 
+	// 	<label>
+	// 		<span>Subject :</span><select name='selection'>
+	// 		<option value='Job Inquiry'>Job Inquiry</option>
+	// 		<option value='General Question'>General Question</option>
+	// 		</select>
+	// 	</label>    
+	// 	<label>
+	// 		<span>&nbsp;</span> 
+	// 		<input type='button' class='button' value='Send' /> 
+	// 	</label>    
+	// 	</form>";
+
+	// echo "<input type=\"submit\" value=\"Update\" /></form></div></div>";
+
     echo "<div class=\"headline container-fluid\"><div class=\"row\"><div class=\"col-sm-6\">";
-
-
      $row = mysqli_fetch_assoc($result);
     echo "<div id=\"register\">
         <div class=\"form\">
