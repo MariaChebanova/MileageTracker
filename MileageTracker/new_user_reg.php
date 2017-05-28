@@ -15,8 +15,6 @@
 	$emailAlerts = trim($_POST["AlertEmail"]);
 	$phoneAlerts = trim($_POST["AlertPhone"]);
 	
-	$password = password_hash($password, PASSWORD_DEFAULT);
-	
 	// check for empty
 	if (empty($login)
 		|| empty($password)
@@ -24,7 +22,9 @@
 		|| empty($lName)
 		|| empty($phone)
 		|| empty($email)) {
-		die("Invalid attempt to register.");
+		echo "<script type='text/javascript'>alert('invalid attempt to register')</script>";
+		echo "<script>setTimeout(\"location.href = 'register.php';\",800);</script>";
+		die();
 	}
 
 	/*
