@@ -19,12 +19,19 @@
 	$connect = dbConnect();
 
 	// query users
-	$sql = "SELECT Username, Password FROM Credentials WHERE Username = '".$login."' AND Password = '".$password."'";
+	$sql = "SELECT Username, Password FROM Credentials WHERE Username = '$login'";
 	$result = $connect->query($sql);
 
 	if ($result->num_rows === 1) {
-		makeSession($login);		
+		$row = mysqli_fetch_assoc($result);
+		$passwordHash = $row['Password'];
+		
+		if (password_verify($password, $passwordHash)) {
+			makeSession($login);		
+		}
 	}
+	
+	redirectToStart();
 	
 	# creates a log in session if user enters correct credentials
 	function makeSession($login) {

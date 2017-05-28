@@ -15,6 +15,8 @@
 	$emailAlerts = trim($_POST["AlertEmail"]);
 	$phoneAlerts = trim($_POST["AlertPhone"]);
 	
+	$password = password_hash($password, PASSWORD_DEFAULT);
+	
 	// check for empty
 	if (empty($login)
 		|| empty($password)
