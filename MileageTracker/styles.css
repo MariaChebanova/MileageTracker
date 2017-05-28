@@ -18,6 +18,56 @@ body {
 	font-weight: 300;
 }
 
+.margin {
+	margin-top: 2em;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+#update_button {
+	margin-top: 1em;
+}
+
+#imprint {
+	margin-top: 0em;
+	padding-top: 0em;
+}
+
+.form, #first {
+ 
+    width: 500px;
+   }
+
+.main-icons {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1em;
+	margin-bottom: 3em;
+	text-align: center;
+}
+
+#main-logo {
+	height: 18px;
+	width: auto;
+}
+
+img {
+	height: 80px;
+	width: auto;
+}
+
+.login {
+	padding-top: 5em;
+}
+
+iframe {
+	width: 100%;
+	height: 500px;
+	margin-bottom: 2em;
+}
+
 #milestable {
 	margin: auto;
 }
@@ -33,9 +83,17 @@ body {
 	font-size: 2em;
 }
 
+.name {
+	color: white;
+}
+
 .center {
 	text-align: center;
 	color: white;
+}
+
+.center-points {
+	text-align: center;
 }
 
 #head-out {
@@ -82,7 +140,8 @@ h2 {
 .about-text {
 	font-size: 18px;
 
-	padding-top: 1em;
+	padding-top: 5em;
+	margin-top: 2em;
 	margin-left: 10em;
 	margin-right: 10em;
 }
@@ -100,7 +159,7 @@ h2 {
 
 /* heading area */
 #head {
-	padding-top: 3em;
+	padding-top: 2.5em;
 }
 
 /* the actual headline text */
@@ -117,10 +176,6 @@ h2 {
 	display: none;
 }
 
-/* SVG graphics */
-svg {
-	height: 1em;
-}
 
 /* footer styles */
 #footer {
@@ -184,7 +239,7 @@ nav a:active, nav a:hover, nav a:link, nav a:visited {
 @media screen and (min-width: 768px) {
 
 	.clear {
-	margin-left: 20%;
+	margin-left: 25%;
 	margin-right: auto;
 }
 	body {
@@ -212,18 +267,23 @@ nav a:active, nav a:hover, nav a:link, nav a:visited {
 		background-size: 100%;
 
 		color: white;
-		min-height: 350px;
+		min-height: 250px;
 		padding-right: 2em; /* header text look better */
 		width: 100%;
 	}
 
-	#head, .col-sm-9 {
+	#head {
+		text-align: center;
+	}
+
+	.col-sm-9 {
 		text-align: right;
 	}
 
+
 	.headline {
 		font-size: 1.25em;
-		text-align: center;
+		text-align: left;
 		margin-top: 3em;
 		margin-bottom: 3em;
 	}
@@ -245,21 +305,68 @@ nav a:active, nav a:hover, nav a:link, nav a:visited {
 	}
 
 	#head {
-		min-height: 400px;
+		min-height: 300px;
 	}
 }
 
 /* Applies certain styles for browsers with screen larger than 1200px */
 @media screen and (min-width: 1200px) {
 	#head {
-		min-height: 450px;
+		min-height: 350px;
 	}
+}
+
+
+@media screen and (max-width: 768px) {
+
+	.form {
+	    width: 300px;
+	}
+
+	.col-sm-4 {
+		padding-top: 2em;
+	}
+
+
+	.login {
+		margin-top: 0em;
+		padding-top: 0em;
+	}
+
+	.about-text {
+	font-size: 18px;
+
+	padding-top: 5em;
+	margin-top: 2em;
+	margin-left: 2em;
+	margin-right: 2em;
+	}
+
+
+
+}
+
+.form-checkbox {
+	 box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
+    display: block;
+    width: 100%;
+    padding: 7px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    background: transparent;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    font: 16px Arial, Helvetica, sans-serif;
+   color: #797979;
+    height: 45px;
 }
 
 
 .form, #first {
     font-family: 'Open Sans Condensed', arial, sans;
-    width: 500px;
     padding: 30px;
     background: #FFFFFF;
     margin: 50px auto;
@@ -270,6 +377,7 @@ nav a:active, nav a:hover, nav a:link, nav a:visited {
 }
 .form h2, #first {
     background: #4D4D4D;
+    text-align: center;
     text-transform: uppercase;
     font-family: 'Open Sans Condensed', sans-serif;
     color: #797979;

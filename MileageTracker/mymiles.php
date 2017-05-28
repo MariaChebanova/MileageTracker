@@ -11,7 +11,8 @@
 ?>
 
     <div id="main">
-     <h2 class="clear">Alerts</h2>
+    <div class="margin">
+     <h3 class="clear">Alerts</h3></div>
 
      
 
@@ -49,7 +50,7 @@ echo "</ul></div>";
 
     $result = $connect->query($sql);
 
-    echo "<h2 class=\"clear\">My Miles</h2>
+    echo "<div class=\"margin\"><h3 class=\"clear\">My Miles</h3></div>
     <div class=\"clear\"><div id=\"milestable\"><table>
             <tr id=\"first\">
                 <th>Airline</th>
@@ -72,13 +73,17 @@ echo "</ul></div>";
     $connect = dbConnect();
 
     $sql = "SELECT AirlineName, AirlineCode
-            FROM Airline";
+            FROM Airline
+            ORDER BY AirlineName ASC";
 
     $result = $connect->query($sql);
 
-    echo " <h2 class=\"clear\">AddAirline</h2>
-    <div class=\"clear\">
-            <form action=\"airline_login2.php\">
+    
+   echo "
+
+        <div class=\"form\">
+        <h2>Add a New Balance</h2>
+            <form id=\"regform\" action=\"airline_login2.php\">
                 <select name=\"airline\">";
 
     while($row = mysqli_fetch_assoc($result)) {
@@ -86,7 +91,7 @@ echo "</ul></div>";
 
     }
 
-    echo "</select><input type=\"submit\"></form></div>";
+    echo "</select><input type=\"submit\" value=\"Add\"></form></div>";
 ?>
     </div>
     

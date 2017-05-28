@@ -26,17 +26,26 @@
 	} else {
 		$points = 0;
 	}
+
+	$sql = "SELECT AirlineName FROM Airline WHERE AirlineCode = '".$airline."'";
+	$AL = $connect->query($sql);
+	$row = mysqli_fetch_assoc($AL);
+	$airline_name = $row['AirlineName'];
+
 	
-	echo "<h2>Please login to airline, and copy points and expiration</h2>";
+	echo "<h3 class=\"center-points\">login to airline below and copy<br>the mileage balance and expiration date</h3>";
 	
     echo "	<div id=\"update\">
         		<div class=\"form\">
-          			<h2>Airline Points</h2>
+          			<h2>Add a New Balance<br>
+          			&nbsp;<br>
+          			".$airline_name."
+          			</h2>
           			<form id=\"regform\" action=\"airline_complete2.php\" method=\"post\">
-          				<input type=\"number\" name=\"Miles\" placeholder=\"$points\" />
+          				<input type=\"number\" name=\"Miles\" placeholder=\"paste mileage balance here...\" />
           				<input type=\"date\" name=\"Expiration\" placeholder=\"".date('Y-m-d')."\"/>
 						<input type=\"hidden\" name=\"Airline\" value=\"$airline\"/>
-      					<input type=\"submit\" value=\"Update\" />
+      					<input type=\"submit\" value=\"Add\" />
 					</form>
 				</div>
 			</div>";

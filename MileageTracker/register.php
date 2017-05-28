@@ -5,9 +5,8 @@
 	sessionSet();
 	head();
 ?>
-
+    
     <div class="headline container-fluid">
-        <p>Welcome! Register for MileageTracker.</p>
     </div>
     <div id="register">
         <div class="form">
@@ -19,8 +18,10 @@
             <input type="number" name="PassengerPhoneNumber" placeholder="phone" />
             <input type="text" name="PassengerUserName" placeholder="username" />
             <input type="password" name="PassengerPassword" placeholder="password" />
-            <input type="checkbox" name="AlertEmail" value="Email">Email Alerts<br>
-            <input type="checkbox" name="AlertPhone" value="Phone">Phone Alerts<br>
+            <span class="form-checkbox">
+                <input type="checkbox" name="AlertEmail" value="Email" /> email alerts&nbsp;
+                <input type="checkbox" name="AlertPhone" value="Phone" /> text alerts
+            </span><br>
             <input type="submit" value="Register" />
           </form>
         </div>

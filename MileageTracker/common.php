@@ -18,11 +18,15 @@
 		    </head>
 		    <body>
 		        <nav>
-		            <a href="index.php"><object id="airplane" data="images/airplane.svg" type="image/svg+xml"></object></a>
+		            <a href="index.php"><img id="main-logo" src="images/airplane.png" /></a>
+		            
+
 
 <?php
 	if (isset($_SESSION["name"])) {
 		echo "<span class=\"center\">".$_SESSION["name"]."'s miles</span>";
+	} else {
+		echo "<span class=\"name\">MileageTracker</span>";
 	}
 ?>
 
@@ -52,8 +56,8 @@
 ?>
 
 		        <div id="head" class=" container-fluid">
-		            <h1>MileageTracker</h1>
-		            <p id="motto">never let your miles expire</p>
+		            <!--<h1>MileageTracker</h1>-->
+		            <!--<p id="motto">never let your miles expire</p>-->
 		        </div>
 <?php
 
@@ -78,9 +82,18 @@
 		                <div class="col-sm-3">
 		                   &copy; 2017 MileageTracker
 		                </div>
-		                <div class="col-sm-9">
-		                    <p><a href="imprint.html">Imprint</a></p>
-		                </div>
+		                <div class="col-sm-9"><p>
+
+<?php
+	if (!isset($_SESSION["name"])) {
+		echo "<a href=\"imprint.php\">Imprint</a>";
+	} else {
+		echo "You are Logged In";
+	}
+?>
+		                
+
+				</p></div>
 		            </div>
 		        </div>
 		    </body>
