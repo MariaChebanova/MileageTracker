@@ -43,7 +43,7 @@
           			</h2>
           			<form id=\"regform\" action=\"airline_complete2.php\" method=\"post\">
           				<input type=\"number\" name=\"Miles\" placeholder=\"paste mileage balance here...\" />
-          				<input type=\"date\" name=\"Expiration\" placeholder=\"".date('Y-m-d')."\"/>
+          				<input type=\"date\" name=\"Expiration\" placeholder=\"expiration date: ".date('Y-m-d')."\"/>
 						<input type=\"hidden\" name=\"Airline\" value=\"$airline\"/>
       					<input type=\"submit\" value=\"Add\" />
 					</form>

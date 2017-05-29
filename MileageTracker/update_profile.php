@@ -53,8 +53,6 @@
 	}
 
 	if (!empty($password)) {
-		$password = password_hash($password, PASSWORD_DEFAULT);
-		
 		$sql = "UPDATE Credentials
 				SET Password = '".$password."'
 				WHERE Username = '".$user."'";

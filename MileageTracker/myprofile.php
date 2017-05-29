@@ -48,22 +48,22 @@
         <div class=\"form\">
           <h2>My Preferences</h2>
           <form id=\"regform\" action=\"update_preferences.php\" method=\"post\">
-<input type=\"text\" name=\"AlertDays\" placeholder=\"Alert Before Days: ".$row['AlertDays']."\" />";
+<input type=\"number\" name=\"AlertDays\" placeholder=\"Alert Before Days: ".$row['AlertDays']."\" />";
 
 	$emailAlert = $row['AlertEmail'];
 	$phoneAlert = $row['AlertPhone'];
 
 	echo "<span class=\"form-checkbox\">";
 	if ($emailAlert == 1) {
-		echo"<label>Email Alerts </label><input type=\"checkbox\" name=\"AlertEmail\" value=\"Email\" checked=\"checked\"><br>";
+		echo"<input type=\"checkbox\" name=\"AlertEmail\" value=\"Email\" checked=\"checked\"> email alerts";
 	} else {
-		echo"<label>Email Alerts </label><input type=\"checkbox\" name=\"AlertEmail\" value=\"Email\"><br>";
+		echo"<input type=\"checkbox\" name=\"AlertEmail\" value=\"Email\"> email alerts";
 	}
 
 	if ($phoneAlert == 1) {
-		echo"<label>Phone Alerts</label><input type=\"checkbox\" name=\"AlertPhone\" value=\"Phone\" checked=\"checked\"><br>";
+		echo"&nbsp;<input type=\"checkbox\" name=\"AlertPhone\" value=\"Phone\" checked=\"checked\"> text alerts<br>";
 	} else {
-		echo"<label>Phone Alerts</label><input type=\"checkbox\" name=\"AlertPhone\" value=\"Phone\"><br>";
+		echo"&nbsp;<input type=\"checkbox\" name=\"AlertPhone\" value=\"Phone\"> text alerts<br>";
 	}
 
     echo "</span><input id=\"update_button\" type=\"submit\" value=\"Update\" /></form></div></div>";
