@@ -52,8 +52,8 @@
 	$connect = dbConnect();
 
 	// query users
-	$passAdd = "INSERT INTO Passenger (PassengerFName, PassengerLName, PassengerEmail, PassengerPhoneNumber, AlertEmail, AlertPhone)
-			VALUES ('".$fName."', '".$lName."', '".$email."', '".$phone."', ".$email_Alerts.", ".$phone_Alerts.")";
+	$passAdd = "INSERT INTO Passenger (PassengerFName, PassengerLName, PassengerEmail, PassengerPhoneNumber, AlertEmail, AlertPhone, AlertDays)
+			VALUES ('".$fName."', '".$lName."', '".$email."', '".$phone."', ".$email_Alerts.", ".$phone_Alerts.", 7)";
 
 	$passengerAdd = $connect->query($passAdd);
 
@@ -62,5 +62,6 @@
 
 	$credsAdd = $connect->query($credAdd);
 
-	header("Location: index.php");
+	echo "<script type='text/javascript'>alert('thank you for registering - please login with your new credentials')</script>";
+	echo "<script>setTimeout(\"location.href = 'index.php';\",800);</script>";
 ?>

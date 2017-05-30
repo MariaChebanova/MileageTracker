@@ -18,6 +18,11 @@ body {
 	font-weight: 300;
 }
 
+#not-tracking {
+	color: red;
+	margin-bottom: 5em;
+}
+
 .margin {
 	margin-top: 2em;
 }
@@ -70,6 +75,13 @@ iframe {
 
 #milestable {
 	margin: auto;
+	padding-top: 1.5em;
+
+
+}
+
+.form-new-balance {
+	padding-top: 1.5em;
 }
 
 #exp-list {
@@ -110,6 +122,7 @@ th {
 
 table {
     border-collapse: collapse;
+    margin-bottom: 3em;
 }
 
 table, th, td {
@@ -342,6 +355,21 @@ nav a:active, nav a:hover, nav a:link, nav a:visited {
 	margin-right: 2em;
 	}
 
+	.margin {
+	margin-left: 2em;
+}
+
+.mobile {
+	display: none;
+}
+
+
+#milestable {
+
+	padding-left: 2em;
+
+}
+
 
 
 }
@@ -458,11 +486,11 @@ nav a:active, nav a:hover, nav a:link, nav a:visited {
 }
  
 th {
-  color:#D5DDE5;;
-  background:#1b1e24;
+  color: #797979;
+  background:#4D4D4D;
   border-bottom:4px solid #9ea7af;
   border-right: 1px solid #343a45;
-  font-size:23px;
+  font-size:20px;
   font-weight: 100;
   padding:24px;
   text-align:left;
@@ -489,7 +517,7 @@ tr {
 }
  
 tr:hover td {
-  background:#4E5066;
+  background:#34CACA;
   color:#FFFFFF;
   border-top: 1px solid #22262e;
   border-bottom: 1px solid #22262e;
@@ -508,7 +536,7 @@ tr:nth-child(odd) td {
 }
  
 tr:nth-child(odd):hover td {
-  background:#4E5066;
+  background:#34CACA;
 }
 
 tr:last-child td:first-child {
