@@ -25,7 +25,16 @@
 	$result = $connect->query($sql);
 
 	if ($result->num_rows === 1) {
-		makeSession($login);		
+		$row = mysqli_fetch_assoc($result);
+		$passwordHash = $row['Password'];
+		
+		if (password_verify($password, $passwordHash)) {
+			makeSession($login);		
+		} else {
+			echo "<script type='text/javascript'>alert('incorrect username or password')</script>";
+			echo "<script>setTimeout(\"location.href = 'index.php';\",800);</script>";
+			die();
+		}	
 	} else {
 		echo "<script type='text/javascript'>alert('incorrect username or password')</script>";
 		echo "<script>setTimeout(\"location.href = 'index.php';\",800);</script>";
