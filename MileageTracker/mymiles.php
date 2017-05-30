@@ -91,6 +91,7 @@ echo "</ul></div>";
 
     $sql = "SELECT AirlineName, AirlineCode
             FROM Airline
+			WHERE ValidURL=1
             ORDER BY AirlineName ASC";
 
     $result = $connect->query($sql);
