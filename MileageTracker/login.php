@@ -31,7 +31,7 @@
 		if (password_verify($password, $passwordHash)) {
 			makeSession($login);		
 		} else {
-			echo "<script type='text/javascript'>alert('incorrect password $passwordHash  $password')</script>";
+			echo "<script type='text/javascript'>alert('incorrect password')</script>";
 			echo "<script>setTimeout(\"location.href = 'index.php';\",800);</script>";
 			die();
 		}	
